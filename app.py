@@ -1,6 +1,6 @@
 from flask import Flask
 from pathlib import Path
-import json
+import json, re
 
 app = Flask(__name__)
 
@@ -89,6 +89,8 @@ def recent_milestone_cards(limit=5):
                         break
             except Exception:
                 pass
+
+        summary = re.sub(r"\\bV\\d+\\b", "", summary).replace("  ", " ").strip()
 
         html += f"""
         <div class="repo-card">
@@ -557,7 +559,7 @@ h1{{
 <section class="panel">
     <h2>Portfolio Intelligence Layer</h2>
     <p>
-        Portfolio V4 converts the portfolio from a static showcase into a live intelligence layer.
+        The portfolio intelligence layer converts the portfolio from a static showcase into a live operational reporting view.
         This panel reads local project history, repository folders, milestone documents, screenshots,
         archive size, and latest milestone state directly from the development environment.
     </p>
@@ -571,7 +573,7 @@ h1{{
 <section class="panel">
     <h2>Live Ecosystem Health</h2>
     <p>
-        Portfolio V3 adds a live operational view of the ChapNetAI local engine stack.
+        The live ecosystem health panel provides an operational view of the ChapNetAI local engine stack.
         Each check verifies whether the corresponding ecosystem system is reachable.
     </p>
     <div class="health-grid">
@@ -607,7 +609,7 @@ h1{{
 <section class="panel">
     <h2>Skills & Technology Stack</h2>
     <p>
-        Portfolio V3 identifies the practical technologies and workflows used across the ecosystem.
+        The technology stack panel identifies the practical technologies and workflows used across the ecosystem.
     </p>
     <div class="skill-grid">
         <span class="skill">Python</span>
