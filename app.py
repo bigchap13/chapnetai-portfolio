@@ -59,6 +59,11 @@ def ecosystem_health_cards():
 
 
 
+def public_text(value):
+    value = re.sub(r"\\bV\\d+\\b", "", str(value))
+    value = value.replace("  ", " ")
+    return " ".join(value.split()).strip()
+
 def public_milestone_title(raw):
     title = raw.replace("-", " ").title()
     for token in [" V1 ", " V2 ", " V3 ", " V4 ", " V5 ", " V6 ", " V7 ", " V8 ", " V9 "]:
@@ -90,7 +95,10 @@ def recent_milestone_cards(limit=5):
             except Exception:
                 pass
 
-        summary = re.sub(r"\\bV\\d+\\b", "", summary).replace("  ", " ").strip()
+        summary = re.sub(r"\\bV\\d+\\b", "", summary)
+        summary = summary.replace("ChapNetAI Portfolio  expanded", "ChapNetAI Portfolio expanded")
+        summary = summary.replace("ChapNetAI Portfolio  established", "ChapNetAI Portfolio established")
+        summary = " ".join(summary.split()).strip()
 
         html += f"""
         <div class="repo-card">
@@ -392,6 +400,20 @@ h1{{
     .capability-grid{{grid-template-columns:repeat(2,1fr)}}
 }}
 
+
+a{{
+    color:#7CFFB2;
+    text-decoration:none;
+    font-weight:950;
+}}
+a:visited{{
+    color:#7CFFB2;
+}}
+a:hover{{
+    color:#A7FFD0;
+    text-decoration:underline;
+}}
+
 </style>
 </head>
 <body>
@@ -455,7 +477,7 @@ h1{{
 <section class="panel">
     <h2>Live Ecosystem Links</h2>
     <div class="grid">
-        <div class="system journey"><h3>Command Hub</h3><p><a href="http://127.0.0.1:5056/command-landing">Open ChapNetAI Command Hub</a></p></div>
+        <div class="system journey"><h3>Command Hub</h3><p><a href="http://127.0.0.1:5056/command-landing">Open Command Hub</a></p></div>
         <div class="system local"><h3>Local Loop</h3><p><a href="http://127.0.0.1:5063">Open Local Loop</a></p></div>
         <div class="system grant"><h3>Grant Finder</h3><p><a href="http://127.0.0.1:5057">Open Grant Finder</a></p></div>
         <div class="system exec"><h3>Executive Command</h3><p><a href="http://127.0.0.1:8082/ecosystem">Open Executive Command</a></p></div>
