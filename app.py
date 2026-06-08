@@ -24,6 +24,39 @@ def registry_stats():
 
     return milestone_folders, milestone_docs, projects
 
+def ecosystem_health_cards():
+    import urllib.request
+
+    checks = [
+        ("Command Hub", "http://127.0.0.1:5056/command-landing"),
+        ("Joshua's Journey", "http://127.0.0.1:5056/intake-admissions-center"),
+        ("Watchman", "http://127.0.0.1:5056/watchman-executive-briefing"),
+        ("Grant Finder", "http://127.0.0.1:5057"),
+        ("Local Loop", "http://127.0.0.1:5063"),
+        ("Executive Command", "http://127.0.0.1:8082/ecosystem"),
+    ]
+
+    html = ""
+    for name, url in checks:
+        status = "OFFLINE"
+        css = "offline"
+        try:
+            req = urllib.request.Request(url, method="HEAD")
+            with urllib.request.urlopen(req, timeout=1.5) as resp:
+                if resp.status in (200, 302):
+                    status = "ONLINE"
+                    css = "online"
+        except Exception:
+            pass
+
+        html += f"""
+        <div class="health-card {css}">
+            <strong>{status}</strong>
+            <span>{name}</span>
+        </div>
+        """
+    return html
+
 @app.route("/")
 def home():
     milestone_folders, milestone_docs, projects = registry_stats()
@@ -41,6 +74,8 @@ def home():
         project_rows = """
         <div class="metric-card"><strong>Live</strong><span>Registry Pending</span></div>
         """
+
+    health_html = ecosystem_health_cards()
 
     return f"""
 <!DOCTYPE html>
@@ -116,6 +151,45 @@ h1{{
     font-weight:950;
 }}
 .footer{{text-align:center;color:#94a3b8;margin-top:34px}}
+.health-grid{{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:18px}}
+.health-card{{
+    padding:18px;
+    border-radius:24px;
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.14);
+    text-align:center;
+}}
+.health-card strong{{display:block;font-size:22px;margin-bottom:6px}}
+.health-card span{{color:#cbd5e1;font-weight:900}}
+.health-card.online{{border-color:rgba(124,255,178,.38);box-shadow:0 0 24px rgba(124,255,178,.14)}}
+.health-card.online strong{{color:#7CFFB2}}
+.health-card.offline{{border-color:rgba(248,113,113,.38);box-shadow:0 0 24px rgba(248,113,113,.10)}}
+.health-card.offline strong{{color:#F87171}}
+.repo-grid{{display:grid;grid-template-columns:1fr;gap:14px;margin-top:18px}}
+.repo-card{{
+    display:block;
+    text-decoration:none;
+    color:white;
+    padding:20px;
+    border-radius:24px;
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.14);
+}}
+.repo-card strong{{display:block;font-size:22px;color:#7CFFB2;margin-bottom:6px}}
+.repo-card span{{color:#cbd5e1;line-height:1.4}}
+.skill-grid{{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}}
+.skill{{
+    padding:10px 14px;
+    border-radius:999px;
+    background:rgba(56,189,248,.10);
+    border:1px solid rgba(56,189,248,.25);
+    color:#bff3ff;
+    font-weight:950;
+}}
+@media(min-width:760px){{
+    .health-grid{{grid-template-columns:repeat(3,1fr)}}
+    .repo-grid{{grid-template-columns:repeat(2,1fr)}}
+}}
 @media(min-width:760px){{
     .grid{{grid-template-columns:repeat(2,1fr)}}
     .metrics{{grid-template-columns:repeat(4,1fr)}}
@@ -234,6 +308,76 @@ h1{{
     <div class="metrics">
         {project_rows}
     </div>
+</section>
+
+<section class="panel">
+    <h2>Live Ecosystem Health</h2>
+    <p>
+        Portfolio V3 adds a live operational view of the ChapNetAI local engine stack.
+        Each check verifies whether the corresponding ecosystem system is reachable.
+    </p>
+    <div class="health-grid">
+        {health_html}
+    </div>
+</section>
+
+<section class="panel">
+    <h2>GitHub Repository Index</h2>
+    <p>
+        Core repositories behind the ChapNetAI ecosystem and proof-of-work archive.
+    </p>
+    <div class="repo-grid">
+        <a class="repo-card" href="https://github.com/bigchap13/chapnetai-portfolio">
+            <strong>chapnetai-portfolio</strong>
+            <span>Public-facing proof-of-work portfolio and ecosystem showcase.</span>
+        </a>
+        <a class="repo-card" href="https://github.com/bigchap13/chapnetai-project-history">
+            <strong>chapnetai-project-history</strong>
+            <span>Milestones, screenshots, founder notes, registry reports, and project archives.</span>
+        </a>
+        <a class="repo-card" href="https://github.com/bigchap13/joshuas-journey">
+            <strong>joshuas-journey</strong>
+            <span>Recovery, workforce, Watchman, Community Support Network, and Command Hub platform.</span>
+        </a>
+        <a class="repo-card" href="https://github.com/bigchap13/grantfinder">
+            <strong>grantfinder</strong>
+            <span>Grant discovery, application drafting, funding pipeline, and reporting system.</span>
+        </a>
+    </div>
+</section>
+
+<section class="panel">
+    <h2>Skills & Technology Stack</h2>
+    <p>
+        Portfolio V3 identifies the practical technologies and workflows used across the ecosystem.
+    </p>
+    <div class="skill-grid">
+        <span class="skill">Python</span>
+        <span class="skill">Flask</span>
+        <span class="skill">Git</span>
+        <span class="skill">GitHub</span>
+        <span class="skill">Termux</span>
+        <span class="skill">Android Development</span>
+        <span class="skill">Mobile-First UI</span>
+        <span class="skill">Milestone Archiving</span>
+        <span class="skill">Route Validation</span>
+        <span class="skill">Operational Dashboards</span>
+        <span class="skill">Project Governance</span>
+        <span class="skill">Documentation Systems</span>
+    </div>
+</section>
+
+<section class="panel">
+    <h2>Founder Story</h2>
+    <p>
+        ChapNetAI represents a self-taught, mobile-first software development journey
+        focused on building practical systems for community support, recovery, workforce,
+        funding, operational intelligence, and project accountability.
+    </p>
+    <p>
+        The work is documented through Project History, validated through live local engines,
+        and organized through a milestone registry designed to preserve the build journey.
+    </p>
 </section>
 
 <section class="panel">
