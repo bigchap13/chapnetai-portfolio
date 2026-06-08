@@ -58,6 +58,82 @@ def ecosystem_health_cards():
     return html
 
 
+
+def recent_milestone_cards(limit=5):
+    milestones_dir = PROJECT_HISTORY / "milestones"
+    if not milestones_dir.exists():
+        return '<div class="repo-card"><strong>No Milestones Found</strong><span>Project History not detected.</span></div>'
+
+    milestone_dirs = [x for x in milestones_dir.iterdir() if x.is_dir()]
+    milestone_dirs = sorted(milestone_dirs, key=lambda x: x.stat().st_mtime, reverse=True)[:limit]
+
+    html = ""
+    for item in milestone_dirs:
+        title = item.name.replace("-", " ").title()
+        doc = item / "MILESTONE.md"
+        summary = "Archived ecosystem milestone."
+        if doc.exists():
+            try:
+                text = doc.read_text(errors="ignore")
+                for line in text.splitlines():
+                    line = line.strip()
+                    if line and not line.startswith("#") and not line.startswith("-") and len(line) > 40:
+                        summary = line[:180]
+                        break
+            except Exception:
+                pass
+
+        html += f"""
+        <div class="repo-card">
+            <strong>{title}</strong>
+            <span>{summary}</span>
+        </div>
+        """
+    return html
+
+def executive_ecosystem_summary():
+    milestones_dir = PROJECT_HISTORY / "milestones"
+
+    milestone_folders = len([x for x in milestones_dir.iterdir() if x.is_dir()]) if milestones_dir.exists() else 0
+    milestone_docs = len(list(milestones_dir.rglob("MILESTONE.md"))) if milestones_dir.exists() else 0
+    screenshot_count = len(list(milestones_dir.rglob("*.jpg"))) + len(list(milestones_dir.rglob("*.png"))) if milestones_dir.exists() else 0
+
+    repo_count = 0
+    try:
+        repo_count = len([x for x in Path.home().iterdir() if x.is_dir() and (x / ".git").exists()])
+    except Exception:
+        pass
+
+    archive_size_mb = 0
+    try:
+        archive_size_mb = round(sum(f.stat().st_size for f in milestones_dir.rglob("*") if f.is_file()) / (1024 * 1024), 1)
+    except Exception:
+        pass
+
+    latest = "No milestone detected"
+    try:
+        milestone_dirs = [x for x in milestones_dir.iterdir() if x.is_dir()]
+        if milestone_dirs:
+            latest = max(milestone_dirs, key=lambda x: x.stat().st_mtime).name.replace("-", " ").title()
+    except Exception:
+        pass
+
+    return f"""
+    <div class="executive-grid">
+        <div class="executive-card primary">
+            <strong>Operational</strong>
+            <span>Ecosystem Status</span>
+        </div>
+        <div class="executive-card"><strong>6</strong><span>Active Systems</span></div>
+        <div class="executive-card"><strong>{repo_count}</strong><span>Git Repositories</span></div>
+        <div class="executive-card"><strong>{milestone_folders}</strong><span>Milestone Folders</span></div>
+        <div class="executive-card"><strong>{milestone_docs}</strong><span>Milestone Documents</span></div>
+        <div class="executive-card"><strong>{screenshot_count}</strong><span>Archived Screenshots</span></div>
+        <div class="executive-card"><strong>{archive_size_mb} MB</strong><span>Project History</span></div>
+        <div class="executive-card wide"><strong>{latest}</strong><span>Latest Archived Milestone</span></div>
+    </div>
+    """
+
 def portfolio_intelligence_cards():
     milestones_dir = PROJECT_HISTORY / "milestones"
 
@@ -130,6 +206,8 @@ def home():
 
     health_html = ecosystem_health_cards()
     intelligence_html = portfolio_intelligence_cards()
+    executive_html = executive_ecosystem_summary()
+    recent_milestones_html = recent_milestone_cards()
 
     return f"""
 <!DOCTYPE html>
@@ -272,6 +350,39 @@ h1{{
     line-height:1.5;
 }}
 
+
+.executive-grid{{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:18px}}
+.executive-card{{
+    padding:20px;
+    border-radius:24px;
+    background:linear-gradient(145deg,rgba(124,255,178,.10),rgba(56,189,248,.06));
+    border:1px solid rgba(124,255,178,.22);
+    box-shadow:0 0 28px rgba(124,255,178,.09);
+    text-align:center;
+}}
+.executive-card.primary{{
+    grid-column:1 / -1;
+    background:linear-gradient(145deg,rgba(124,255,178,.16),rgba(56,189,248,.10));
+}}
+.executive-card.wide{{grid-column:1 / -1}}
+.executive-card strong{{display:block;color:#7CFFB2;font-size:32px;line-height:1.05}}
+.executive-card span{{display:block;color:#cbd5e1;font-weight:950;margin-top:8px;line-height:1.3}}
+.capability-grid{{display:grid;grid-template-columns:1fr;gap:14px;margin-top:18px}}
+.capability{{
+    padding:18px;
+    border-radius:24px;
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.14);
+}}
+.capability strong{{display:block;font-size:22px;color:#7CFFB2;margin-bottom:6px}}
+.capability span{{color:#cbd5e1;line-height:1.45}}
+@media(min-width:760px){{
+    .executive-grid{{grid-template-columns:repeat(4,1fr)}}
+    .executive-card.primary{{grid-column:1 / -1}}
+    .executive-card.wide{{grid-column:1 / -1}}
+    .capability-grid{{grid-template-columns:repeat(2,1fr)}}
+}}
+
 </style>
 </head>
 <body>
@@ -386,6 +497,54 @@ h1{{
     <div class="metrics">
         {project_rows}
     </div>
+</section>
+
+<section class="panel">
+    <h2>Executive Ecosystem Summary</h2>
+    <p>
+        A public-facing operational summary of the ChapNetAI ecosystem, showing the current
+        portfolio proof-of-work, repository footprint, archive depth, and latest milestone activity.
+    </p>
+    {executive_html}
+</section>
+
+<section class="panel">
+    <h2>Recent Milestone Activity</h2>
+    <p>
+        The latest archived milestones from Project History show active development,
+        validation, documentation, and ecosystem growth.
+    </p>
+    <div class="repo-grid">
+        {recent_milestones_html}
+    </div>
+</section>
+
+<section class="panel">
+    <h2>Core Capabilities</h2>
+    <p>
+        ChapNetAI is organized around practical operating capabilities rather than isolated apps.
+    </p>
+    <div class="capability-grid">
+        <div class="capability"><strong>Community Technology</strong><span>Local engagement, posts, mapping, support coordination, and community visibility.</span></div>
+        <div class="capability"><strong>Recovery Operations</strong><span>Resident workflows, admissions, profiles, recovery services, workforce development, and alumni support.</span></div>
+        <div class="capability"><strong>Grant Intelligence</strong><span>Funding discovery, pipeline tracking, application drafting, reporting, and submission workflows.</span></div>
+        <div class="capability"><strong>Operational Monitoring</strong><span>Live system health, Watchman oversight, action queues, verification, and closure workflows.</span></div>
+        <div class="capability"><strong>Executive Oversight</strong><span>Ecosystem integration, project history, milestone registry, platform health, and governance visibility.</span></div>
+        <div class="capability"><strong>Project Governance</strong><span>Build validation, screenshots, archive discipline, commit checkpoints, and public proof-of-work.</span></div>
+    </div>
+</section>
+
+<section class="panel">
+    <h2>Why This Matters</h2>
+    <p>
+        This ecosystem demonstrates how multiple operational platforms can be designed,
+        built, validated, documented, and maintained through a disciplined mobile-first
+        engineering workflow.
+    </p>
+    <p>
+        The portfolio connects the public story to real proof: live systems, GitHub repositories,
+        milestone archives, screenshots, and repeatable validation checkpoints.
+    </p>
 </section>
 
 <section class="panel">
