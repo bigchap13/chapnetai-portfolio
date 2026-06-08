@@ -442,6 +442,79 @@ a:hover{{
     color:#F6C453;
 }}
 
+
+.ecosystem-map{{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:14px;
+    margin-top:18px;
+}}
+.map-root{{
+    padding:22px;
+    border-radius:26px;
+    background:linear-gradient(145deg,rgba(124,255,178,.14),rgba(56,189,248,.08));
+    border:1px solid rgba(124,255,178,.30);
+    box-shadow:0 0 30px rgba(124,255,178,.10);
+    text-align:center;
+}}
+.map-root strong{{
+    display:block;
+    color:#7CFFB2;
+    font-size:28px;
+}}
+.map-node{{
+    padding:20px;
+    border-radius:24px;
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.14);
+    border-left:7px solid #38BDF8;
+}}
+.map-node strong{{
+    display:block;
+    font-size:22px;
+    color:white;
+    margin-bottom:8px;
+}}
+.map-node span{{
+    color:#cbd5e1;
+    line-height:1.45;
+    font-weight:800;
+}}
+.map-node.journey{{border-left-color:#F6C453}}
+.map-node.watchman{{border-left-color:#7CFFB2}}
+.map-node.grant{{border-left-color:#A855F7}}
+.map-node.local{{border-left-color:#38BDF8}}
+.map-node.exec{{border-left-color:#F59E0B}}
+
+.timeline{{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:14px;
+    margin-top:18px;
+}}
+.timeline-item{{
+    padding:20px;
+    border-radius:24px;
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.14);
+}}
+.timeline-item strong{{
+    display:block;
+    color:#7CFFB2;
+    font-size:21px;
+    margin-bottom:7px;
+}}
+.timeline-item span{{
+    color:#cbd5e1;
+    line-height:1.45;
+    font-weight:800;
+}}
+@media(min-width:760px){{
+    .ecosystem-map{{grid-template-columns:repeat(2,1fr)}}
+    .map-root{{grid-column:1 / -1}}
+    .timeline{{grid-template-columns:repeat(2,1fr)}}
+}}
+
 </style>
 </head>
 <body>
@@ -498,6 +571,41 @@ a:hover{{
         <div class="system exec">
             <h3>Executive Command</h3>
             <p>Ecosystem integration, project history, platform health, portfolio management, and executive oversight.</p>
+        </div>
+    </div>
+</section>
+
+<section class="panel">
+    <h2>ChapNetAI Ecosystem Map</h2>
+    <p>
+        A simple public-facing view of how the ChapNetAI ecosystem fits together.
+        Each system supports a different part of the mission while remaining connected
+        through the Command Hub, Watchman, Project History, and Executive oversight.
+    </p>
+    <div class="ecosystem-map">
+        <div class="map-root">
+            <strong>ChapNetAI</strong>
+            <span>Community technology, recovery operations, workforce development, grant intelligence, and ecosystem oversight.</span>
+        </div>
+        <div class="map-node journey">
+            <strong>Joshua's Journey</strong>
+            <span>Recovery operations • Workforce development • Community Support Network • Resident workflows • Command Hub</span>
+        </div>
+        <div class="map-node watchman">
+            <strong>Watchman</strong>
+            <span>Monitoring • Action queues • Verification • Closure • Executive briefing • Operational intelligence</span>
+        </div>
+        <div class="map-node grant">
+            <strong>Grant Finder</strong>
+            <span>Funding discovery • Application drafting • Pipeline tracking • Calendar • Reporting</span>
+        </div>
+        <div class="map-node local">
+            <strong>Local Loop</strong>
+            <span>Community feed • Local posting • Mapping • Engagement • Walker County network</span>
+        </div>
+        <div class="map-node exec">
+            <strong>Executive Command</strong>
+            <span>Portfolio • Project History • Milestone Registry • Ecosystem status • Oversight</span>
         </div>
     </div>
 </section>
@@ -623,6 +731,48 @@ a:hover{{
         The journey is still being written, but its foundation remains the same as the day it began:
         <strong>Turn pain into purpose. Build something that helps people.</strong>
     </p>
+</section>
+
+<section class="panel">
+    <h2>ChapNetAI Timeline</h2>
+    <p>
+        A concise public timeline showing how the ChapNetAI vision moved from origin,
+        to active development, to a documented ecosystem portfolio.
+    </p>
+    <div class="timeline">
+        <div class="timeline-item">
+            <strong>March 1, 2025</strong>
+            <span>ChapNetAI vision established.</span>
+        </div>
+        <div class="timeline-item">
+            <strong>May 2026</strong>
+            <span>Major ecosystem build acceleration begins across recovery, public safety, funding, and operational systems.</span>
+        </div>
+        <div class="timeline-item">
+            <strong>Joshua's Journey</strong>
+            <span>Recovery, housing, workforce, resident operations, and community support workflows developed.</span>
+        </div>
+        <div class="timeline-item">
+            <strong>Grant Finder</strong>
+            <span>Funding discovery, application drafting, pipeline tracking, calendar, and reporting workflows developed.</span>
+        </div>
+        <div class="timeline-item">
+            <strong>Watchman</strong>
+            <span>Monitoring, action queues, verification, closure, and executive briefing capabilities added.</span>
+        </div>
+        <div class="timeline-item">
+            <strong>Local Loop</strong>
+            <span>Walker County community engagement, local posting, photo feed, and mapping system developed.</span>
+        </div>
+        <div class="timeline-item">
+            <strong>Executive Command</strong>
+            <span>Portfolio, milestone registry, project history, and ecosystem oversight layers connected.</span>
+        </div>
+        <div class="timeline-item">
+            <strong>Public Portfolio</strong>
+            <span>ChapNetAI proof-of-work portfolio launched to present the mission, ecosystem, validation process, and Founder Story.</span>
+        </div>
+    </div>
 </section>
 
 <section class="panel">
