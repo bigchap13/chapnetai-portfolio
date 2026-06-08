@@ -59,6 +59,13 @@ def ecosystem_health_cards():
 
 
 
+def public_milestone_title(raw):
+    title = raw.replace("-", " ").title()
+    for token in [" V1 ", " V2 ", " V3 ", " V4 ", " V5 ", " V6 ", " V7 ", " V8 ", " V9 "]:
+        title = title.replace(token, " ")
+    title = title.replace(" V1", "").replace(" V2", "").replace(" V3", "").replace(" V4", "").replace(" V5", "")
+    return " ".join(title.split())
+
 def recent_milestone_cards(limit=5):
     milestones_dir = PROJECT_HISTORY / "milestones"
     if not milestones_dir.exists():
@@ -69,7 +76,7 @@ def recent_milestone_cards(limit=5):
 
     html = ""
     for item in milestone_dirs:
-        title = item.name.replace("-", " ").title()
+        title = public_milestone_title(item.name)
         doc = item / "MILESTONE.md"
         summary = "Archived ecosystem milestone."
         if doc.exists():
@@ -114,7 +121,7 @@ def executive_ecosystem_summary():
     try:
         milestone_dirs = [x for x in milestones_dir.iterdir() if x.is_dir()]
         if milestone_dirs:
-            latest = max(milestone_dirs, key=lambda x: x.stat().st_mtime).name.replace("-", " ").title()
+            latest = public_milestone_title(max(milestone_dirs, key=lambda x: x.stat().st_mtime).name)
     except Exception:
         pass
 
@@ -151,7 +158,7 @@ def portfolio_intelligence_cards():
 
         if milestone_dirs:
             latest = max(milestone_dirs, key=lambda x: x.stat().st_mtime)
-            latest_milestone = latest.name.replace("-", " ").title()
+            latest_milestone = public_milestone_title(latest.name)
             latest_milestone_path = latest
 
     repo_count = 0
