@@ -181,6 +181,36 @@ h1{{
 </section>
 
 <section class="panel">
+    <h2>Live Ecosystem Links</h2>
+    <div class="grid">
+        <div class="system journey"><h3>Command Hub</h3><p><a href="http://127.0.0.1:5056/command-landing">Open ChapNetAI Command Hub</a></p></div>
+        <div class="system local"><h3>Local Loop</h3><p><a href="http://127.0.0.1:5063">Open Local Loop</a></p></div>
+        <div class="system grant"><h3>Grant Finder</h3><p><a href="http://127.0.0.1:5057">Open Grant Finder</a></p></div>
+        <div class="system exec"><h3>Executive Command</h3><p><a href="http://127.0.0.1:8082/ecosystem">Open Executive Command</a></p></div>
+    </div>
+</section>
+
+<section class="panel">
+    <h2>Founder Timeline</h2>
+    <ul>
+        <li><strong>March 1, 2025:</strong> ChapNetAI vision established.</li>
+        <li><strong>May 2026:</strong> Major platform build cycle begins across public safety, grant funding, recovery, and ecosystem systems.</li>
+        <li><strong>June 2026:</strong> Command Hub, Local Loop, Watchman, Executive Command, Milestone Registry, and Portfolio layers connected.</li>
+        <li><strong>Current:</strong> Six-system ChapNetAI ecosystem running through a mobile-first development workflow.</li>
+    </ul>
+</section>
+
+<section class="panel">
+    <h2>Development Environment</h2>
+    <div class="metrics">
+        <div class="metric-card"><strong>S23</strong><span>Samsung Ultra</span></div>
+        <div class="metric-card"><strong>Termux</strong><span>Mobile Linux</span></div>
+        <div class="metric-card"><strong>Flask</strong><span>Python Apps</span></div>
+        <div class="metric-card"><strong>GitHub</strong><span>Version Control</span></div>
+    </div>
+</section>
+
+<section class="panel">
     <h2>Development Workflow</h2>
     <p>
         ChapNetAI uses a repeatable milestone workflow: build, validate, screenshot,
