@@ -414,6 +414,34 @@ a:hover{{
     text-decoration:underline;
 }}
 
+
+.repo-status{{
+    display:inline-block;
+    margin:2px 0 10px;
+    padding:7px 11px;
+    border-radius:999px;
+    font-size:13px;
+    font-weight:950;
+    letter-spacing:.3px;
+}}
+.repo-status.public{{
+    color:#7CFFB2;
+    background:rgba(124,255,178,.10);
+    border:1px solid rgba(124,255,178,.28);
+}}
+.repo-status.private{{
+    color:#F6C453;
+    background:rgba(246,196,83,.10);
+    border:1px solid rgba(246,196,83,.30);
+}}
+.private-repo{{
+    cursor:default;
+    opacity:.96;
+}}
+.private-repo strong{{
+    color:#F6C453;
+}}
+
 </style>
 </head>
 <body>
@@ -665,24 +693,40 @@ a:hover{{
     <h2>GitHub Repository Index</h2>
     <p>
         Core repositories behind the ChapNetAI ecosystem and proof-of-work archive.
+        Public repositories are linked directly. Private development repositories are identified
+        without sending visitors to inaccessible GitHub pages.
     </p>
     <div class="repo-grid">
         <a class="repo-card" href="https://github.com/bigchap13/chapnetai-portfolio">
             <strong>chapnetai-portfolio</strong>
+            <span class="repo-status public">Public Repository</span>
             <span>Public-facing proof-of-work portfolio and ecosystem showcase.</span>
         </a>
         <a class="repo-card" href="https://github.com/bigchap13/chapnetai-project-history">
             <strong>chapnetai-project-history</strong>
+            <span class="repo-status public">Public Repository</span>
             <span>Milestones, screenshots, founder notes, registry reports, and project archives.</span>
         </a>
-        <a class="repo-card" href="https://github.com/bigchap13/joshuas-journey">
-            <strong>joshuas-journey</strong>
+        <div class="repo-card private-repo">
+            <strong>Joshua's Journey</strong>
+            <span class="repo-status private">Private Development Repository</span>
             <span>Recovery, workforce, Watchman, Community Support Network, and Command Hub platform.</span>
-        </a>
-        <a class="repo-card" href="https://github.com/bigchap13/grantfinder">
-            <strong>grantfinder</strong>
+        </div>
+        <div class="repo-card private-repo">
+            <strong>Grant Finder</strong>
+            <span class="repo-status private">Private Development Repository</span>
             <span>Grant discovery, application drafting, funding pipeline, and reporting system.</span>
-        </a>
+        </div>
+        <div class="repo-card private-repo">
+            <strong>Watchman</strong>
+            <span class="repo-status private">Private Development Repository</span>
+            <span>Operational intelligence, ecosystem monitoring, action queues, verification, and executive briefing.</span>
+        </div>
+        <div class="repo-card private-repo">
+            <strong>Local Loop</strong>
+            <span class="repo-status private">Private Development Repository</span>
+            <span>Walker County community feed, local posting, mapping, and community engagement system.</span>
+        </div>
     </div>
 </section>
 
