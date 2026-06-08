@@ -699,7 +699,7 @@ a:hover{{
     <div class="repo-grid">
         <a class="repo-card" href="https://github.com/bigchap13/chapnetai-portfolio">
             <strong>chapnetai-portfolio</strong>
-            <span class="repo-status public">Public Repository</span>
+            <span class="repo-status public">Private Archive Repository</span>
             <span>Public-facing proof-of-work portfolio and ecosystem showcase.</span>
         </a>
         <a class="repo-card" href="https://github.com/bigchap13/chapnetai-project-history">
