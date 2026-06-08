@@ -540,6 +540,64 @@ a:hover{{
 </section>
 
 <section class="panel">
+    <h2>Founder Story</h2>
+    <p>
+        ChapNetAI began with a simple belief: technology should help people build better futures.
+    </p>
+    <p>
+        I live in Walker County, Alabama, a region that has faced significant challenges related
+        to addiction, overdose, workforce barriers, economic hardship, and limited access to opportunity.
+        These challenges are not abstract statistics to me. They are personal.
+    </p>
+    <p>
+        One of the defining moments in my life was losing my brother to fentanyl poisoning. Like many
+        families across America, my family experienced the devastating impact of addiction firsthand.
+        That loss changed the way I looked at the world and forced me to ask a difficult question:
+        what can I do to help?
+    </p>
+    <p>
+        Rather than allowing pain to become the final chapter of that story, I chose to turn pain into purpose.
+    </p>
+    <p>
+        On March 1, 2025, I established the vision that would become ChapNetAI.
+    </p>
+    <p>
+        I was not backed by a company, development team, investors, or a traditional technology environment.
+        I did not have a software engineering department, expensive equipment, or a dedicated office.
+        What I had was a vision, determination, and a Samsung S23 Ultra smartphone.
+    </p>
+    <p>
+        Every system within the ChapNetAI ecosystem was designed, built, tested, documented, archived,
+        and maintained directly from that device using a mobile-first development workflow powered by
+        Termux, Python, Flask, GitHub, and continuous learning.
+    </p>
+    <p>
+        The ecosystem grew from a single idea into a connected collection of platforms focused on community
+        support, recovery operations, workforce development, grant intelligence, operational monitoring,
+        executive oversight, project governance, and ecosystem management.
+    </p>
+    <p>
+        Throughout the journey, I followed a simple philosophy: think several moves ahead, build frameworks
+        instead of placeholders, keep systems understandable, design intuitive workflows, and always strive
+        for first-pass excellence.
+    </p>
+    <p>
+        What makes the journey unique is not only what was built, but how it was built. The entire ChapNetAI
+        ecosystem was created through a mobile-first workflow using a Samsung S23 Ultra. Every repository,
+        milestone, validation report, screenshot archive, dashboard, workflow, and platform was developed
+        from that device.
+    </p>
+    <p>
+        Today, ChapNetAI represents more than software. It represents resilience, purpose, community,
+        and the belief that difficult experiences can be transformed into meaningful action.
+    </p>
+    <p>
+        The journey is still being written, but its foundation remains the same as the day it began:
+        <strong>Turn pain into purpose. Build something that helps people.</strong>
+    </p>
+</section>
+
+<section class="panel">
     <h2>Recent Milestone Activity</h2>
     <p>
         The latest archived milestones from Project History show active development,
