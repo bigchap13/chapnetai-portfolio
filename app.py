@@ -57,6 +57,59 @@ def ecosystem_health_cards():
         """
     return html
 
+
+def portfolio_intelligence_cards():
+    milestones_dir = PROJECT_HISTORY / "milestones"
+
+    milestone_folders = 0
+    milestone_docs = 0
+    screenshot_count = 0
+    latest_milestone = "Pending"
+    latest_milestone_path = None
+
+    if milestones_dir.exists():
+        milestone_dirs = [x for x in milestones_dir.iterdir() if x.is_dir()]
+        milestone_folders = len(milestone_dirs)
+        milestone_docs = len(list(milestones_dir.rglob("MILESTONE.md")))
+        screenshot_count = len(list(milestones_dir.rglob("*.jpg"))) + len(list(milestones_dir.rglob("*.png")))
+
+        if milestone_dirs:
+            latest = max(milestone_dirs, key=lambda x: x.stat().st_mtime)
+            latest_milestone = latest.name.replace("-", " ").title()
+            latest_milestone_path = latest
+
+    repo_count = 0
+    tracked_repos = []
+    try:
+        for item in Path.home().iterdir():
+            if item.is_dir() and (item / ".git").exists():
+                repo_count += 1
+                tracked_repos.append(item.name)
+    except Exception:
+        pass
+
+    archive_size_mb = 0
+    try:
+        total_bytes = sum(f.stat().st_size for f in milestones_dir.rglob("*") if f.is_file())
+        archive_size_mb = round(total_bytes / (1024 * 1024), 1)
+    except Exception:
+        pass
+
+    latest_detail = latest_milestone
+    if latest_milestone_path and (latest_milestone_path / "MILESTONE.md").exists():
+        latest_detail = latest_milestone
+
+    return f"""
+    <div class="intel-grid">
+        <div class="intel-card"><strong>{repo_count}</strong><span>Local Git Repositories</span></div>
+        <div class="intel-card"><strong>{milestone_folders}</strong><span>Milestone Folders</span></div>
+        <div class="intel-card"><strong>{milestone_docs}</strong><span>Milestone Documents</span></div>
+        <div class="intel-card"><strong>{screenshot_count}</strong><span>Archived Screenshots</span></div>
+        <div class="intel-card"><strong>{archive_size_mb} MB</strong><span>Project History Archive</span></div>
+        <div class="intel-card wide"><strong>{latest_detail}</strong><span>Latest Archived Milestone</span></div>
+    </div>
+    """
+
 @app.route("/")
 def home():
     milestone_folders, milestone_docs, projects = registry_stats()
@@ -76,6 +129,7 @@ def home():
         """
 
     health_html = ecosystem_health_cards()
+    intelligence_html = portfolio_intelligence_cards()
 
     return f"""
 <!DOCTYPE html>
@@ -194,6 +248,30 @@ h1{{
     .grid{{grid-template-columns:repeat(2,1fr)}}
     .metrics{{grid-template-columns:repeat(4,1fr)}}
 }}
+
+.intel-grid{{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:18px}}
+.intel-card{{
+    padding:20px;
+    border-radius:24px;
+    background:rgba(124,255,178,.08);
+    border:1px solid rgba(124,255,178,.20);
+    text-align:center;
+    box-shadow:0 0 28px rgba(124,255,178,.08);
+}}
+.intel-card strong{{display:block;font-size:32px;color:#7CFFB2;line-height:1.05}}
+.intel-card span{{display:block;color:#cbd5e1;font-weight:900;margin-top:8px;line-height:1.25}}
+.intel-card.wide{{grid-column:1 / -1}}
+.command-note{{
+    margin-top:18px;
+    padding:16px;
+    border-radius:22px;
+    background:rgba(56,189,248,.08);
+    border:1px solid rgba(56,189,248,.22);
+    color:#cbd5e1;
+    font-weight:800;
+    line-height:1.5;
+}}
+
 </style>
 </head>
 <body>
@@ -307,6 +385,20 @@ h1{{
     </p>
     <div class="metrics">
         {project_rows}
+    </div>
+</section>
+
+<section class="panel">
+    <h2>Portfolio Intelligence Layer</h2>
+    <p>
+        Portfolio V4 converts the portfolio from a static showcase into a live intelligence layer.
+        This panel reads local project history, repository folders, milestone documents, screenshots,
+        archive size, and latest milestone state directly from the development environment.
+    </p>
+    {intelligence_html}
+    <div class="command-note">
+        Intelligence source: local ChapNetAI Project History, Git repositories, milestone folders,
+        screenshot archives, and live Flask engine status.
     </div>
 </section>
 
